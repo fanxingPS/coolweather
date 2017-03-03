@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/iv_guide_gif"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:background="@drawable/fragment3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        />
+    <TextView
+        android:id="@+id/tv_guide_shangdiao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="不选我，就上吊啊啊啊"
+        android:layout_below="@+id/iv_guide_gif"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"
+        android:layout_marginTop="17dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(╯‵□′)╯︵┻━┻"
+        android:layout_below="@+id/tv_guide_shangdiao"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_guide_start"
+        android:layout_centerHorizontal="true"
+        android:text="不浪了，老老实实看天气吧"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="70dp"
+        android:textSize="20sp"
+        android:textColor="#ffffffff"
+        android:background="@drawable/guide_btn_start"/>
+
+</RelativeLayout>
