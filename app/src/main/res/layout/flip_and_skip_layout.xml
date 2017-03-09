@@ -2,20 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="80dp"
-        android:layout_height="40dp"
+
+    <ImageView
         android:id="@+id/tv_guide_skip"
-        android:background="@drawable/screen_skip"
-        android:textSize="22sp"
-        android:text="跳过"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="13dp"
-        android:layout_marginTop="13dp"
-        />
-
-
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/skip_image" />
 
 
 </RelativeLayout>

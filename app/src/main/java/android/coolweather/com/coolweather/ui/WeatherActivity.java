@@ -33,12 +33,14 @@ import com.bumptech.glide.Glide;
 import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static android.R.attr.id;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 public class WeatherActivity extends AppCompatActivity {
@@ -62,7 +64,9 @@ public class WeatherActivity extends AppCompatActivity {
     public SwipeRefreshLayout swipeRefresh;
     public DrawerLayout drawerLayout;
     private String weatherId;
-    Weather weatherResponse;
+    Weather weatherResponse=new Weather();
+
+    String cityId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +108,14 @@ public class WeatherActivity extends AppCompatActivity {
         });
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //从偏好设置中获取天气信息和图片
+        //从偏好设置中获取天气信息和图片，还有城市管理中的城市id
         final String weatherString = prefs.getString("weather", null);
         String bingPic = prefs.getString("bing_pic", null);
+        cityId= prefs.getString("cityId", null);
 
-        if (weatherString != null) {
+        if (cityId != null) {
+            requestWeather(cityId);
+        } else if (weatherString != null) {
             Weather weather = Utility.handleWeatherResponse(weatherString);
             weatherId = weather.basic.weatherId;
             showWeatherInfo(weather);
@@ -125,34 +132,24 @@ public class WeatherActivity extends AppCompatActivity {
             loadBingPic();
         }
         //下拉刷新
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                requestWeather(weatherId);
-            }
-        });
+        setSwipeRefreshLayouListener();
+
         //点击加号时添加城市
         ivPlusSign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PlusCity plusCity = new PlusCity();
                 String cityName = weatherResponse.getBasic().getCityName();
-                String cityId=weatherResponse.getBasic().getWeatherId();
+                String cityId = weatherResponse.getBasic().getWeatherId();
                 List<PlusCity> plusCities = DataSupport.where("cityName=?", cityName).find(PlusCity.class);
-                if (plusCities.size()>0) {
-                    if (cityName.equals(plusCities.get(0).getCityName())) {
-                        Toast.makeText(WeatherActivity.this, "该城市已添加", Toast.LENGTH_SHORT).show();
-                    } else {
-                        plusCity.setCityName(cityName);
-                        plusCity.setCityId(cityId);
-                        plusCity.save();
-                        Toast.makeText(WeatherActivity.this, "添加城市成功", Toast.LENGTH_SHORT).show();
-                    }
-                }else {
+                PlusCity plusCity=new PlusCity();
+                Log.i("aaa","数据库"+plusCities.size());
+                if (plusCities.size()==0){
                     plusCity.setCityName(cityName);
                     plusCity.setCityId(cityId);
                     plusCity.save();
                     Toast.makeText(WeatherActivity.this, "添加城市成功", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(WeatherActivity.this, "该城市已添加", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -161,10 +158,23 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WeatherActivity.this, CityListActivity.class);
+                SharedPreferences.Editor editor=PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
+                editor.putString("cityId",weatherId);
+                editor.commit();
                 startActivity(intent);
-                finish();
+                WeatherActivity.this.finish();
             }
         });
+    }
+
+    private void setSwipeRefreshLayouListener() {
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestWeather(weatherId);
+            }
+        });
+
     }
 
     public void requestWeather(final String id) {
@@ -260,11 +270,11 @@ public class WeatherActivity extends AppCompatActivity {
                     }
                 });
             }
-
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
             }
         });
     }
+
 }

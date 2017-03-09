@@ -13,7 +13,6 @@ import android.coolweather.com.coolweather.ui.WeatherActivity;
 import android.coolweather.com.coolweather.util.HttpUtil;
 import android.coolweather.com.coolweather.util.Utility;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -203,7 +202,6 @@ public class Choose_AreaFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseText = response.body().string();
-                Log.i("aaa","URL地址"+responseText);
                 boolean result = false;
                 if ("province".equals(type)) {
                     result = Utility.handleProvinceResponse(responseText);
@@ -211,9 +209,7 @@ public class Choose_AreaFragment extends Fragment {
                     result = Utility.handleCityResponse(responseText, selectedProvince.getId());
                 } else if ("county".equals(type)) {
                     result = Utility.handleCountyResponse(responseText, selectedCity.getId());
-                    Log.i("aaa", "if里的" + result);
                 }
-                Log.i("aaa", "执行到这了" + result);
                 if (result) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override

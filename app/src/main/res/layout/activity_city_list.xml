@@ -10,7 +10,7 @@
         android:id="@+id/rl_title_city_list"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="#cc0077ff">
+        android:background="?attr/colorPrimary">
 
         <TextView
             android:id="@+id/tv_return"

@@ -14,10 +14,10 @@
         android:id="@+id/tv_guide_shangdiao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="不选我，就上吊啊啊啊"
+        android:text="不用我，就上吊！"
         android:layout_below="@+id/iv_guide_gif"
         android:layout_centerHorizontal="true"
-        android:textSize="25sp"
+        android:textSize="22sp"
         android:layout_marginTop="17dp"
         />
 
@@ -27,7 +27,7 @@
         android:text="(╯‵□′)╯︵┻━┻"
         android:layout_below="@+id/tv_guide_shangdiao"
         android:layout_centerHorizontal="true"
-        android:textSize="25sp"
+        android:textSize="18sp"
         />
 
     <Button
@@ -35,12 +35,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/btn_guide_start"
         android:layout_centerHorizontal="true"
-        android:text="不浪了，老老实实看天气吧"
+        android:text="不浪了，看天气~"
         android:paddingLeft="13dp"
         android:paddingRight="13dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="70dp"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textColor="#ffffffff"
         android:background="@drawable/guide_btn_start"/>
 
